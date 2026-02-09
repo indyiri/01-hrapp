@@ -30,7 +30,32 @@ namespace HrApp.Controllers
             return View();
         }
 
-        //TODO
+        [HttpPost]
+        public async Task<IActionResult> LoginUserName(LoginUserNameViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            var user = await _userManager.FindByNameAsync(vm.UserName);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return View(vm);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user, vm.Password, false, false);
+            
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Employee");
+            }
+
+            ModelState.AddModelError("", "Invalid login attempt.");
+            return View(vm);
+        }
 
         #endregion
 
@@ -42,7 +67,32 @@ namespace HrApp.Controllers
             return View();
         }
 
-        //TODO
+        [HttpPost]
+        public async Task<IActionResult> LoginEmail(LoginEmailViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            var user = await _userManager.FindByEmailAsync(vm.Email);
+            
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return View(vm);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, vm.Password, false, false);
+            
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Employee");
+            }
+
+            ModelState.AddModelError("", "Invalid login attempt.");
+            return View(vm);
+        }
 
         #endregion
 
