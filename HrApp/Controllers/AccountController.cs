@@ -127,7 +127,7 @@ namespace HrApp.Controllers
                     }
                 }
             }
-            return View();
+            return View(registerModel);
         }
 
         #endregion

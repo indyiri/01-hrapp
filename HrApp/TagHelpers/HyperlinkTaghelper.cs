@@ -30,7 +30,7 @@ namespace HrApp.TagHelpers
                     break;
                 case LoginType.External:
                     output.Content.AppendHtml("<i class=\"fa-solid fa-fingerprint\"></i>"
-                                            + "<h4>Open Id</h4>");
+                                            + "<h4>Open Id & Ext. provider</h4>");
                     break;
                 default:
                     output.Content.AppendHtml("<i class=\"fa-solid fa-question\"></i>"
